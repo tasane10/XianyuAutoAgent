@@ -69,7 +69,8 @@ async def main():
             break
         except Exception as e:
             logger.error(f"Unexpected error: {e}")
-            wait_time = random.uniform(5, 15)
+            # Increased max wait time to 30s to be less aggressive on reconnects
+            wait_time = random.uniform(5, 30)
             logger.info(f"Reconnecting in {wait_time:.1f} seconds...")
             await asyncio.sleep(wait_time)
 
@@ -100,62 +101,4 @@ async def run_websocket_loop(
         if now - last_heartbeat >= heartbeat_interval:
             await ws.ping()
             last_heartbeat = now
-            logger.debug("Heartbeat sent.")
-
-        try:
-            data = json.loads(message)
-        except json.JSONDecodeError:
-            logger.warning(f"Received non-JSON message: {message!r}")
-            continue
-
-        msg_type = data.get("type", "")
-
-        if msg_type == "message":
-            await handle_message(xianyu_api, bot, data)
-        elif msg_type == "heartbeat":
-            logger.debug("Heartbeat acknowledged by server.")
-        else:
-            logger.debug(f"Unhandled message type: {msg_type}")
-
-
-async def handle_message(
-    xianyu_api: XianyuApis,
-    bot: XianyuReplyBot,
-    data: dict,
-):
-    """Process an incoming chat message and send a reply.
-
-    Args:
-        xianyu_api: Initialized XianyuApis instance.
-        bot: Initialized XianyuReplyBot instance.
-        data: Parsed message payload from WebSocket.
-    """
-    chat_id = data.get("chatId", "")
-    item_id = data.get("itemId", "")
-    sender_id = data.get("senderId", "")
-    content = data.get("content", "")
-
-    if not content or not chat_id:
-        return
-
-    logger.info(f"[{chat_id}] Received from {sender_id}: {content}")
-
-    # Generate reply using the AI agent
-    reply = bot.generate_reply(
-        user_message=content,
-        item_id=item_id,
-        chat_id=chat_id,
-    )
-
-    if reply:
-        success = xianyu_api.send_message(chat_id=chat_id, content=reply)
-        if success:
-            logger.info(f"[{chat_id}] Replied: {reply}")
-        else:
-            logger.error(f"[{chat_id}] Failed to send reply.")
-    else:
-        logger.warning(f"[{chat_id}] Bot returned empty reply, skipping.")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+         
