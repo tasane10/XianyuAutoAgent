@@ -97,6 +97,8 @@ python main.py
 - `tech_prompt.txt`: 技术专家提示词
 - `default_prompt.txt`: 默认回复提示词
 
+> 📝 **个人备注**：我在 `price_prompt.txt` 中将最低议价底线设置为原价的 85%，根据自己的商品定价灵活调整这个比例效果更好。
+
 ## 🤝 参与贡献
 
 欢迎通过 Issue 提交建议或 PR 贡献代码，请遵循 [贡献指南](https://contributing.md/)
@@ -121,7 +123,4 @@ https://github.com/cv-cat/XianYuApis
   <table>
     <tr>
       <td align="center"><strong>交流群24（已满200）</strong></td>
-      <td align="center"><strong>交流群25（推荐加入）</strong></td>
-    </tr>
-    <tr>
-      <td><img src
+      <td align="center"><strong>交流群25（推荐加入
