@@ -99,6 +99,8 @@ python main.py
 
 > 📝 **个人备注**：我在 `price_prompt.txt` 中将最低议价底线设置为原价的 85%，根据自己的商品定价灵活调整这个比例效果更好。
 
+> 💡 **个人备注**：cookies 过期后程序会静默失败，建议每天早上运行前先手动刷新一次 cookies，养成习惯可以避免漏回消息。
+
 ## 🤝 参与贡献
 
 欢迎通过 Issue 提交建议或 PR 贡献代码，请遵循 [贡献指南](https://contributing.md/)
@@ -122,5 +124,4 @@ https://github.com/cv-cat/XianYuApis
 <div align="center">
   <table>
     <tr>
-      <td align="center"><strong>交流群24（已满200）</strong></td>
-      <td align="center"><strong>交流群25（推荐加入
+      <td align="center">
