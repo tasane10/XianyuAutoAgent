@@ -64,7 +64,8 @@ class XianyuReplyBot:
     def _safe_filter(self, text: str) -> str:
         """安全过滤模块"""
         # Added '转账' and '私聊' to blocked phrases to catch more off-platform payment attempts
-        blocked_phrases = ["微信", "QQ", "支付宝", "银行卡", "线下", "转账", "私聊"]
+        # Also added '红包' and '收款码' which are common payment workarounds on Chinese platforms
+        blocked_phrases = ["微信", "QQ", "支付宝", "银行卡", "线下", "转账", "私聊", "红包", "收款码"]
         return "[安全提醒]请通过平台沟通" if any(p in text for p in blocked_phrases) else text
 
     def format_history(self, context: List[Dict]) -> str:
@@ -76,6 +77,4 @@ class XianyuReplyBot:
     def generate_reply(self, user_msg: str, item_desc: str, context: List[Dict]) -> str:
         """生成回复主流程"""
         # 记录用户消息
-        # logger.debug(f'用户所发消息: {user_msg}')
-        
-        formatted_context = self.format_history(contex
+    
