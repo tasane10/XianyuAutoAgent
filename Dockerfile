@@ -47,8 +47,8 @@ WORKDIR /app
 # 从构建阶段复制虚拟环境
 COPY --from=builder /opt/venv /opt/venv
 
-# 创建必要的目录
-RUN mkdir -p data prompts
+# 创建必要的目录（logs 目录用于持久化日志，可挂载为 volume）
+RUN mkdir -p data prompts logs
 
 # 复制示例提示词文件并重命名为正式文件
 COPY prompts/classify_prompt_example.txt prompts/classify_prompt.txt
@@ -59,6 +59,9 @@ COPY prompts/default_prompt_example.txt prompts/default_prompt.txt
 # 只复制绝对必要的文件
 COPY main.py XianyuAgent.py XianyuApis.py context_manager.py ./
 COPY utils/ utils/
+
+# 声明 logs 和 data 目录为可挂载卷，方便持久化数据
+VOLUME ["/app/data", "/app/logs"]
 
 # 容器启动时运行的命令
 CMD ["python", "main.py"]
